@@ -89,9 +89,11 @@ class MainActivity : AppCompatActivity() {
             if(firstRowDigit == 0 ){
                 result = "$result${tens[secondRowDigit]}"
             }else{
-                result = when(secondRowDigit){
-                    9,7,5,3 -> "$result${tens[secondRowDigit].substring(0, tens[secondRowDigit].length - 3)}";
-                    else -> "$result${tens[secondRowDigit].substring(0, tens[secondRowDigit].length - 1)}და"
+                if(secondRowDigit != 0){
+                    result = when(secondRowDigit){
+                        9,7,5,3 -> "$result${tens[secondRowDigit].substring(0, tens[secondRowDigit].length - 3)}";
+                        else -> "$result${tens[secondRowDigit].substring(0, tens[secondRowDigit].length - 1)}და"
+                    }
                 }
                 result = when(secondRowDigit % 2){
                     0 -> "$result${first9[firstRowDigit]}";
