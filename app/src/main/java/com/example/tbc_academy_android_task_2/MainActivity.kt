@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         val generatedResultText: TextView = findViewById(R.id.generatedResultText);
 
         generateNumberButton.setOnClickListener{
-            var generatedText: String = ""
+            val generatedText: String
             val enteredNumber:Int? = numberInput.text.toString().toIntOrNull()
 
             if(enteredNumber == null){
@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculateNumberText(value:Int):String {
-        val first9 = arrayOf<String>("","ერთი", "ორი", "სამი", "ოთხი", "ხუთი", "ექვსი", "შვიდი", "რვა", "ცხრა")
-        val elevenToNineteen  = arrayOf<String>("","თერთმეტი", "თორმეტი", "ცამეტი", "თოთხმეტი", "თხუთმეტი", "თექვსმეტი", "ჩვიდმეტი", "თვრამეტი", "ცხრამეტი")
-        val tens = arrayOf<String>("","ათი", "ოცი", "ოცდაათი", "ორმოცი", "ორმოცდაათი", "სამოცი", "სამოცდაათი", "ოთხმოცი", "ოთხმოცდაათი");
+        val first9 = arrayOf("","ერთი", "ორი", "სამი", "ოთხი", "ხუთი", "ექვსი", "შვიდი", "რვა", "ცხრა")
+        val elevenToNineteen  = arrayOf("","თერთმეტი", "თორმეტი", "ცამეტი", "თოთხმეტი", "თხუთმეტი", "თექვსმეტი", "ჩვიდმეტი", "თვრამეტი", "ცხრამეტი")
+        val tens = arrayOf("","ათი", "ოცი", "ოცდაათი", "ორმოცი", "ორმოცდაათი", "სამოცი", "სამოცდაათი", "ოთხმოცი", "ოთხმოცდაათი");
         val indexedValueDigits = mutableMapOf<Int, Int>()
         val stringValue: String = value.toString().reversed();
 
@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity() {
         }
         var result = "";
 
-//      ჯერ განვიხილოთ სიტუაციები რომლებსაც სტრინგის აწყობა არ გვინდა და პირდაპირ პასუხს ვაბრუნებთ
-//      თუ არის ათასი
+//      სიტუაციები სადაც სტრინგის აწყობა არ არის საჭირო
+//      თუ რიცხვი არის ათასი
         if (value == 1000){
             return "ათასი"
         }
 
-//      თუ უნაშთოდ იყოფა ასზე 100დან - 1000მდე
+//      თუ რიცხვი უნაშთოდ იყოფა 100-ზე 100დან - 1000მდე
         if (value % 100 == 0 && value < 1000){
             return when(value / 100){
                 1 -> "ასი"
@@ -56,12 +56,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//      თუ უნაშთოდ იყოფა ათზე 10დან - 100მდე
+//      თუ რიცხვი უნაშთოდ იყოფა 10-ზე 10დან - 100მდე
         if (value % 10 == 0 && value < 100){
-            return tens[value / 10].toString()
+            return tens[value / 10]
         }
 
-//      თუ არის 11 სა და 20-ს შორის
+//      თუ რიცხვი არის 11 სა და 20-ს შორის
         if(value in 11..19){
             return elevenToNineteen[value-10].toString();
         }
@@ -75,10 +75,9 @@ class MainActivity : AppCompatActivity() {
 
 //      თუ რიცხვი მეტია 100-ზე
         if (value > 100){
-            val thirdRowDigit:Int = indexedValueDigits[3].toString().toInt()
-            when(thirdRowDigit){
-                1 -> result = "ას "
-                else -> result = "${first9[thirdRowDigit].substring(0, first9[thirdRowDigit].length - 1)}ას "
+            result = when(val thirdRowDigit:Int = indexedValueDigits[3].toString().toInt()){
+                1 -> "ას "
+                else -> "${first9[thirdRowDigit].substring(0, first9[thirdRowDigit].length - 1)}ას "
             }
         }
 
