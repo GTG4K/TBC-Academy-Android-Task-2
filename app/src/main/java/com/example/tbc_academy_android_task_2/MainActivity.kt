@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         val generateNumberButton: Button = findViewById(R.id.generateNumberButton)
         val numberInput: TextView = findViewById(R.id.numberInput)
-        val generatedResultText: TextView = findViewById(R.id.generatedResultText);
+        val generatedResultText: TextView = findViewById(R.id.generatedResultText)
 
         generateNumberButton.setOnClickListener{
             val generatedText: String
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         if (value % 100 == 0 && value < 1000){
             return when(value / 100){
                 1 -> "ასი"
+                8, 9 -> first9[value/100] + "ასი"
                 else -> first9[value/100].substring(0, first9[value/100].length - 1) + "ასი"
             }
         }
@@ -63,11 +64,11 @@ class MainActivity : AppCompatActivity() {
 
 //      თუ რიცხვი არის 11 სა და 20-ს შორის
         if(value in 11..19){
-            return elevenToNineteen[value-10].toString();
+            return elevenToNineteen[value-10]
         }
 //      თუ ნაკლებია ათზე
         if(value < 10){
-            return first9[value].toString();
+            return first9[value];
         }
 
 //      დავიწყოთ სტრინგის აწყობა
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         if (value > 100){
             result = when(val thirdRowDigit:Int = indexedValueDigits[3].toString().toInt()){
                 1 -> "ას "
+                8, 9 -> "${first9[thirdRowDigit]}ას "
                 else -> "${first9[thirdRowDigit].substring(0, first9[thirdRowDigit].length - 1)}ას "
             }
         }
